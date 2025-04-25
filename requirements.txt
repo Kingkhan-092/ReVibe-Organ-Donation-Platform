@@ -1,17 +1,17 @@
 cairocffi==1.0.2
 CairoSVG==2.3.0
-cffi==1.14.5  # Updated to a more recent version
+cffi==1.14.5
 cssselect2==0.2.1
-defusedxml==0.5.0
-Django==2.2.24  # Updated to a compatible version
+defusedxml==0.7.1  # Updated to be compatible with pyhanko
+Django==3.2.15
 html5lib==1.0.1
 pdfkit==0.6.1
-Pillow==8.0.0  # Updated to a compatible version
-pycparser==2.20  # Updated to a more recent version
-PyPDF2==1.26.0  # You might want to switch to `pypdf` or `PyPDF4` instead (optional)
+Pillow==9.5.0
+pycparser==2.20
+PyPDF2==1.26.0
 Pyphen==0.9.5
 pytz==2018.9
-reportlab>=3.6.0
+reportlab==3.5.66
 six==1.12.0
 tinycss2==1.0.1
 WeasyPrint==46
