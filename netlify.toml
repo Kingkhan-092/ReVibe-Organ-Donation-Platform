@@ -5,3 +5,9 @@
 [build.environment]
   # Specify the Python version to use
   PYTHON_VERSION = "3.8.10"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = true
