@@ -1,0 +1,190 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | ReVibe</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpg" href="{% static 'images/logo2.jpg' %}" sizes="100x100">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+    <!-- Font Awesome & Google Fonts -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/about-us.css' %}?v={% now "U" %}">
+</head>
+
+
+<body>
+
+    <!-- 🔵 Navbar -->
+    <header class="zone">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="/home/">
+                <img src="{% static 'images/logo.png' %}" alt="Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/home/" target="_self">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">ABOUT US</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/community/">COMMUNITY</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">LOGIN</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'donor-login' %}">DONOR</a>
+                            <a class="dropdown-item" href="{% url 'hospital-login' %}">HOSPITAL</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 🟢 About Us Section -->
+    <section class="about-section">
+        <div class="hero-overlay d-flex align-items-center justify-content-center">
+            <div class="container text-center description">
+                <h1 class="section-title">About ReVibe</h1>
+                <p id="hero-description">
+                    At ReVibe, we are committed to creating a world where life-saving donations reach those in need — seamlessly and with dignity.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 🟢 Mission, Vision & What We Do Section -->
+    <section id="mission-vision-section" class="container py-5">
+        <h2 class="section-title mb-5">Our Mission, Vision & What We Do</h2>
+        <div class="row text-center">
+            <!-- Mission -->
+            <div class="col-md-4 mb-4">
+                <div class="donation-details">
+                    <h3 class="section-subtitle">Our Mission</h3>
+                    <p>
+                        Our mission is to bridge the gap between donors and healthcare facilities to ensure that no one misses a second chance at life. We aim to make organ donation accessible, transparent, and impactful.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Vision -->
+            <div class="col-md-4 mb-4">
+                <div class="donation-details">
+                    <h3 class="section-subtitle">Our Vision</h3>
+                    <p>
+                        We envision a future where technology and humanity come together to enable timely donations and transform lives globally. With ReVibe, we are building that future—one donation at a time.
+                    </p>
+                </div>
+            </div>
+
+            <!-- What We Do -->
+            <div class="col-md-4 mb-4">
+                <div class="donation-details">
+                    <h3 class="section-subtitle">What We Do</h3>
+                    <p>
+                        ReVibe is a platform that allows donors to register, hospitals to manage appointments, and both to track donations in a centralized system. We handle the logistics, so you can focus on saving lives. 
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 🌟 Team Section -->
+    <section class="container2 text-center my-5">
+        <h2 class="team-title">Meet Our Team</h2>
+        <p class="section-description mb-5">
+            We're a passionate group of technologists, healthcare professionals, and changemakers.
+        </p>
+
+        <!-- Row for Team Cards -->
+        <div class="row justify-content-center">
+            <!-- Team Member 1 Card -->
+            <div class="col-sm-6 col-md-4 mb-4">
+                <div class="card details-grid-item">
+                    <img src="{% static 'images/team.png' %}" class="card-img-top" alt="Team Member 1">
+                    <div class="card-body">
+                        <h5 class="card-title">X</h5>
+                        <p class="card-text">Founder & CEO</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Member 2 Card -->
+            <div class="col-sm-6 col-md-4 mb-4">
+                <div class="card details-grid-item">
+                    <img src="{% static 'images/team.png' %}" class="card-img-top" alt="Team Member 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Y</h5>
+                        <p class="card-text">Chief Medical Officer</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Member 3 Card -->
+            <div class="col-sm-6 col-md-4 mb-4">
+                <div class="card details-grid-item">
+                    <img src="{% static 'images/team.png' %}" class="card-img-top" alt="Team Member 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Z</h5>
+                        <p class="card-text">Tech Lead</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 📬 Footer -->
+<footer class="footer_style">
+    <div class="container d-flex justify-content-between align-items-center flex-wrap">
+
+        <!-- Footer Info -->
+        <div class="footer-left">
+            <p>&copy; 2025. ReVibe Inc. All rights reserved.</p>
+            <p class="footer-description">
+                We are a nonprofit organization dedicated to making a difference in the world through donations and charitable actions.
+            </p>
+        </div>
+
+        <!-- Footer Links -->
+        <div class="footer-links">
+            <h5>Quick Links</h5>
+            <a href="{% url 'about-us' %}">About Us</a> |
+            <a href="mailto:support@Revibee.org">Contact Us</a> |
+            <a href="#terms">Terms & Conditions</a> |
+            <a href="#privacy">Privacy Policy</a>
+        </div>
+
+        <!-- Social Media Links -->
+        <div class="footer-social">
+            <h5>Follow Us</h5>
+            <a href="https://facebook.com/RevibeInc" target="_blank" class="social-icon facebook">Facebook</a> |
+            <a href="https://twitter.com/ReVibeInc" target="_blank" class="social-icon twitter">Twitter</a> |
+            <a href="https://linkedin.com/company/ReVibeInc" target="_blank" class="social-icon linkedin">LinkedIn</a> |
+            <a href="https://instagram.com/ReVibeInc" target="_blank" class="social-icon instagram">Instagram</a>
+        </div>
+    </div>
+</footer>
+
+<!-- 🔌 Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Custom JavaScript -->
+<script src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>

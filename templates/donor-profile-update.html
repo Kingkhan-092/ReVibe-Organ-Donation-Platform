@@ -1,0 +1,247 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Donor | Home</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpg" href="{% static 'images/logo2.jpg' %}" sizes="100x100">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+    <!-- Font Awesome & Google Fonts -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/donor-profile-update.css' %}?v={% now "U" %}">
+</head>
+
+<body>
+
+<!-- 🔷 Navigation Header -->
+<header class="zone">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="{% url 'donor-landing-page' %}">
+            <img src="{% static 'images/logo.png' %}" width="100" height="100" alt="Logo">
+        </a>
+
+        <!-- Mobile Nav Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop" aria-controls="navbarTop" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarTop">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'donor-landing-page' %}">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'donor-home' %}">DONATION HISTORY</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'book-appointment' %}">BOOK APPOINTMENT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'new-donation-request' %}">NEW DONATION REQUEST</a>
+                </li>
+
+                <!-- Dropdown for Settings -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        SETTINGS
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="settingsDropdown">
+                        <a class="dropdown-item" href="{% url 'donor-profile-update' %}">User Profile</a>
+                        <a class="dropdown-item" href="{% url 'donor-profile-update' %}">Change Password</a>
+                        <a class="dropdown-item" href="{% url 'donor-logout' %}">Log Out</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+
+    <!-- donation request form--><!--Please see Reference: [4] in README.txt -->
+    <div class="main-container">
+        <div class="custom-container">
+            <div class="custom-row">
+                <div class="custom-col-6">
+                    <div class="profile-card">
+                        <header class="profile-card-header light-bg margin-bottom">
+                            <button class="edit-btn float-right margin-top bg-for-all" type="reset" onclick="enableedituserprofile();">
+                                <i class="fa fa-edit"></i>&nbsp;Edit
+                            </button>
+                            <h4 class="profile-card-title light-bg margin-bottom">User profile</h4>
+                        </header>
+    
+                        <div class="profile-card-content">
+                            <form method="POST" action="{% url 'donor-profile-update'  %}">
+                                {% csrf_token %}
+                                <div class="form-block">
+                                    {% if success and pfcheck %} {{msg}} {% endif %}
+                                </div>
+    
+                                <div class="form-block">
+                                    <span class="input-icon"><i class="fa fa-user"></i></span>
+                                    <label>Donor name</label>
+                                    <input type="text" name="donor_name" value="{{ donor.first_name }}" id="fn" class="input-field" placeholder="" required disabled>
+                                </div>
+    
+                                <div class="form-block">
+                                    <span class="input-icon"><i class="fa fa-at"></i></span>
+                                    <label>Email address</label>
+                                    <input type="email" class="input-field" name="email" placeholder="" id="email" value="{{ donor.email}}" disabled required>
+                                </div>
+    
+                                <div class="form-row-custom">
+                                    <div class="form-block half-width">
+                                        <span class="input-icon"><i class="fa fa-building"></i></span>
+                                        <label>City</label>
+                                        <input type="text" id="city" name="city" class="input-field" value="{{ donor.city }}" disabled>
+                                    </div>
+    
+                                    <div class="form-block half-width">
+                                        <span class="input-icon"><i class="fa fa-building"></i></span>
+                                        <label>Province</label>
+                                        <select id="input-province" name="province" value="Ontario" class="input-field" disabled>
+                                            <option value="Nova Scotia"{% if provinces.0 %} selected{% endif %}>Nova Scotia</option>
+                                            <option value="British Columbia"{% if provinces.1 %} selected {% endif %}>British Columbia</option>
+                                            <option value="Ontario"{% if provinces.2 %} selected {% endif %}>Ontario</option>
+                                            <option value="Quebec"{% if provinces.3 %} selected {% endif %}>Quebec</option>
+                                            <option value="Alberta"{% if provinces.4 %} selected {% endif %}>Alberta</option>
+                                            <option value="New Brunswick"{% if provinces.5 %} selected {% endif %}>New Brunswick</option>
+                                            <option value="Manitoba"{% if provinces.6 %} selected {% endif %}>Manitoba</option>
+                                            <option value="Sasketchawan"{% if provinces.7 %} selected {% endif %}>Sasketchawan</option>
+                                            <option value="New Foundland and Labrador"{% if provinces.8 %} selected {% endif %}>New Foundland and Labrador</option>
+                                            <option value="Prince Edward Island"{% if provinces.9 %} selected {% endif %}>Prince Edward Island</option>
+                                        </select>
+                                    </div>
+                                </div>
+    
+                                <div class="form-row-custom">
+                                    <div class="form-block half-width">
+                                        <span class="input-icon"><i class="fa fa-mobile"></i></span>
+                                        <label>Contact no. (+1)</label>
+                                        <input type="text" id="contact" name="contact" class="input-field" maxlength="10" minlength="10" value="{{ donor.contact_number }}" disabled>
+                                    </div>
+    
+                                    <div class="form-block half-width">
+                                        <span class="input-icon"><i class="fa fa-building"></i></span>
+                                        <label>Country</label>
+                                        <select id="input-country" name="country" class="input-field" disabled>
+                                            <option selected="">Canada</option>
+                                        </select>
+                                    </div>
+                                </div>
+    
+                                <div class="form-block">
+                                    <button name="profile" type="submit" id="submit" class="submit-btn full-width" disabled> Update </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="custom-col-6">
+                    <div class="password-card">
+                        <header class="password-card-header light-bg margin-bottom">
+                            <button class="edit-btn float-right margin-top bg-for-all" type="reset" onclick="enableeditpasswords();">
+                                <i class="fa fa-edit"></i>&nbsp;Edit
+                            </button>
+                            <h4 class="password-card-title light-bg margin-bottom text-center padding-small">Password details</h4>
+                        </header>
+    
+                        <div class="password-card-content">
+                            <form method="POST">
+                                <div class="form-block">
+                                    {% if success and pscheck %} {{msg}} {% endif %}
+                                </div>
+    
+                                <div class="form-block">
+                                    <span class="input-icon"><i class="fa fa-lock"></i></span>
+                                    <label>Old password</label>
+                                    <input type="password" id="password1" name="old_password" class="input-field" disabled required>
+                                </div>
+    
+                                <div class="form-block">
+                                    <span class="input-icon"><i class="fa fa-lock"></i></span>
+                                    <label>New password</label>
+                                    <input class="input-field" type="password" name="new_password" minlength="6" pattern="(?=.*[a-z])(?=.*\d).{6,}" title="Please include 1 uppercase letter, 1 lowercase letter and 1 digit in your password" id="password2" disabled required>
+                                </div>
+    
+                                <div class="form-block">
+                                    <span class="input-icon"><i class="fa fa-lock"></i></span>
+                                    <label>Confirm password</label>
+                                    <input class="input-field" type="password" id="password3" oninput="checkpassword();" disabled required>
+                                </div>
+    
+                                <div class="form-block">
+                                    <span id="password-validation-msg"></span>
+                                </div>
+    
+                                <div class="form-block">
+                                    <button name="password" type="submit" id="update-password" class="submit-btn full-width" disabled> Update </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+       <!-- 📬 Footer -->
+ <footer class="footer_style">
+    <div class="container d-flex justify-content-between align-items-center flex-wrap">
+
+        <!-- Footer Info -->
+        <div class="footer-left">
+            <p>&copy; 2025. ReVibe Inc. All rights reserved.</p>
+            <p class="footer-description">
+                We are a nonprofit organization dedicated to making a difference in the world through donations and charitable actions.
+            </p>
+        </div>
+    </div>
+</footer>
+
+<!-- 🔌 Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function enableedituserprofile() {
+            document.querySelectorAll('#fn, #email, #city, #input-province, #contact, #input-country, #submit').forEach(el => el.disabled = false);
+        }
+    
+        function enableeditpasswords() {
+            document.querySelectorAll('#password1, #password2, #password3, #update-password').forEach(el => el.disabled = false);
+        }
+    
+        function checkpassword() {
+            const pass = document.getElementById('password2').value;
+            const confirm = document.getElementById('password3').value;
+            const message = document.getElementById('password-validation-msg');
+            if (pass !== confirm) {
+                message.textContent = "Passwords do not match!";
+                message.style.color = "red";
+            } else {
+                message.textContent = "Passwords match.";
+                message.style.color = "green";
+            }
+        }
+    </script>
+    
+
+<!-- Custom JavaScript -->
+<script src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>

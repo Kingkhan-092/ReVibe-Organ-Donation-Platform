@@ -1,0 +1,19 @@
+cairocffi==1.0.2
+CairoSVG==2.3.0
+cffi==1.14.5  # Updated to a more recent version
+cssselect2==0.2.1
+defusedxml==0.5.0
+Django==2.2.24  # Updated to a compatible version
+html5lib==1.0.1
+pdfkit==0.6.1
+Pillow==8.0.0  # Updated to a compatible version
+pycparser==2.20  # Updated to a more recent version
+PyPDF2==1.26.0  # You might want to switch to `pypdf` or `PyPDF4` instead (optional)
+Pyphen==0.9.5
+pytz==2018.9
+reportlab>=3.6.0
+six==1.12.0
+tinycss2==1.0.1
+WeasyPrint==46
+webencodings==0.5.1
+xhtml2pdf==0.2.3

@@ -1,0 +1,601 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hospital | Home</title>
+    <link rel="icon" type="image/jpg" href="{% static 'images/logo2.jpg' %}" sizes="100x100">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style_hospital_homepage.css' %}?v={% now 'U' %}">
+</head>
+
+<body id="body">
+  <!-- 🔷 Main Wrapper (optional, for layout/sticky footer) -->
+  <div class="main-wrapper">
+
+    <!-- 🔷 Navigation Header -->
+    <header class="zone blue">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <!-- Logo -->
+        <a class="navbar-brand" href="#home">
+          <img src="{% static 'images/logo.png' %}" width="100" height="100" alt="Logo">
+        </a>
+    
+        <!-- Responsive Toggle -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTop"
+          aria-controls="navbarTop" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <!-- Navbar Content -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarTop">
+          <ul class="navbar-nav" role="tablist">
+    
+            <!-- 🔹 Action Items -->
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Action items</a>
+            </li>
+    
+            <!-- 🔹 Appointment -->
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" data-bs-toggle="tab" href="#appointment_approvals" role="tab" aria-controls="appointment_approvals" aria-selected="false">Pending appointment approvals</a>
+            </li>
+    
+            <!-- 🔹 Donation -->
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" data-bs-toggle="tab" href="#donation_approvals" role="tab" aria-controls="donation_approvals" aria-selected="false">Pending donation approvals</a>
+            </li>
+    
+            <!-- 🔹 Search -->
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" data-bs-toggle="tab" href="#search_donation" role="tab" aria-controls="search_donation" aria-selected="false">Search donations</a>
+            </li>
+    
+            <!-- 🔹 Settings Dropdown -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Settings
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingsDropdown">
+                <li>
+                  <a class="dropdown-item" data-bs-toggle="tab" href="#update_profile" id="updateProfileTab">Update profile</a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'hospital-logout' %}" id="logOut">Log out</a>
+                </li>
+              </ul>
+            </li>
+    
+          </ul>
+        </div>
+      </nav>
+    </header>
+    
+<!-- Navigation Tabs End -->
+
+<!-- Tab Contents Start -->
+<div class="tab-content">
+<div id="home" class="tab-pane fade show active">
+  <div class="flex_container">
+    <div class="top summary">
+      <h3>Summary of action items</h3>
+    </div>
+
+    <div class="card_container top details-grid-container">
+      <!-- Pending Appointments Card -->
+      <div class="card text-white bg-primary mb-3 details-grid-item2" style="max-width: 18rem;" id="appointDiv">
+        <div class="card-header bg-light" style="color: black">Action Item 1</div>
+        <div class="card-body">
+          <h5 class="card-title">Pending appointments</h5>
+          <p class="card-text">
+            You have <strong id="appointmentCount">{{ pending_appointments }}</strong> to approve. Click on the card to proceed.
+          </p>
+        </div>
+      </div>
+
+      <!-- Pending Donations Card -->
+      <div class="card text-white bg-primary mb-3 details-grid-item2" style="max-width: 18rem;" id="donationsDiv">
+        <div class="card-header bg-light" style="color: black">Action Item 2</div>
+        <div class="card-body">
+          <h5 class="card-title">Pending donations</h5>
+          <p class="card-text">
+            You have <strong id="donationCount">{{ pending_donations }}</strong> to approve. Click on the card to proceed.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Pending Appointment Approvals Tab -->
+  <div id="appointment_approvals" class="tab-pane fade">
+    <div class="container top">
+      <div class="child1">
+        <h3>Pending appointments</h3>
+      </div>
+
+      <div class="child2 top">
+        <table class="table table-bordered" id="appointmentTable">
+          <thead>
+            <tr>
+              <th>Selection</th>
+              <th>Appointment ID</th>
+              <th>Donor</th>
+              <th>Organ</th>
+              <th>Appointment date</th>
+              <th>Appointment time</th>
+            </tr>
+          </thead>
+          <tbody id="appointmentsTableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="child3 top">
+        <input type="button" value="Details" id="appointmentDtls" class="blue buttons">
+        <input type="button" value="Approve" id="appointmentApprv" class="approvals blue buttons">
+        <input type="button" value="Deny" id="appointmentDeny" class="denials blue buttons">
+    </div>    
+    </div>
+  </div>
+
+  <div id="donation_approvals" class="tab-pane fade">
+    <div class="container top">
+      <div class="child1">
+        <h3>Pending donations</h3>
+      </div>
+  
+      <div class="child2 top">
+        <table class="table table-bordered" id="donationTable">
+          <thead>
+            <tr>
+              <th>Selection</th>
+              <th>Donation ID</th>
+              <th>Donor</th>
+              <th>Organ</th>
+              <th>Blood group</th>
+            </tr>
+          </thead>
+          <tbody id="donationTableBody"></tbody>
+        </table>
+      </div>
+  
+      <div class="child3 top">
+        <button type="button" class="blue buttons" id="donationDtls">Details</button>
+        <button type="button" class="blue buttons" id="donationApprv">Approve</button>
+        <button type="button" class="blue buttons" id="donationDeny">Deny</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Search Donations Tab -->
+  <div id="search_donation" class="tab-pane fade">
+    <div class="container top">
+      <div class="child1">
+        <input class="search_text" type="text" name="search_key" size="75" placeholder="Search by Organ/Donor name/Donation ID/Blood Group" id="searchInput">
+        <input type="button" id="search_btn" value="Search" class="blue buttons">
+      </div>
+
+      <div class="child_text top">
+        <h5>Search results:</h5>
+      </div>
+
+      <div class="child2" id="search_table_area">
+        <table class="table table-bordered" id="donationSearchTable">
+          <thead>
+            <tr>
+              <th>Selection</th>
+              <th>Donation ID</th>
+              <th>Donor</th>
+              <th>Organ</th>
+              <th>Blood group</th>
+            </tr>
+          </thead>
+          <tbody id="searchTableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="child3 top">
+        <input type="button" value="Details" id="searchDtls" class="blue buttons">
+        <input type="button" value="Email Donor" id="searchEmail" class="blue buttons">
+      </div>
+    </div>
+  </div>
+
+  <!-- Update Profile Tab -->
+  <div id="update_profile" class="tab-pane fade">
+    <div class="container">
+      <div class="row">
+        <!-- Left Column: Profile Info -->
+        <div class="col-md-6">
+          <div class="card bg-light mb-3">
+            <header class="card-header bg-light mb-3">
+              <button class="btn btn-warning float-right mt-1 bg-for-all" type="reset" onclick="enableedituserprofile();">
+                <i class="fa fa-edit"></i>&nbsp;Edit
+              </button>
+              <h4 class="card-title" style="color: black">User profile</h4>
+            </header>
+
+            <div class="card-content">
+              <form id="updateDetailsForm">
+                <!-- Hospital Info -->
+                <div class="form-group">
+                  <label>Hospital name</label>
+                  <input type="text" name="hospital_name" id="hospitalName" class="form-control" disabled required>
+                </div>
+
+                <div class="form-group">
+                  <label>Email address</label>
+                  <input type="email" name="email" id="emailHospital" class="form-control" disabled required>
+                </div>
+
+                <!-- City & Province -->
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label>City</label>
+                    <input type="text" id="city" name="city" class="form-control" disabled>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>Province</label>
+                    <select id="input-province" name="province" class="form-control" disabled>
+                      <option value="Nova Scotia">Nova Scotia</option>
+                      <option value="Ontario">Ontario</option>
+                      <option value="British Columbia">British Columbia</option>
+                      <option value="Quebec">Quebec</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Contact & Country -->
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label>Contact no. (+1)</label>
+                    <input type="text" id="hospitalContact" name="contact" class="form-control" maxlength="10" disabled>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>Country</label>
+                    <select id="input-country" name="country" class="form-control" disabled>
+                      <option selected>Canada</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group">
+                  <button type="submit" id="submitUpdateProf" class="btn btn-block blue buttons" disabled>Update</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Password Update -->
+        <div class="col-md-6">
+          <div class="card bg-light mb-3">
+            <header class="card-header bg-light mb-3">
+              <button class="btn btn-warning float-right mt-1 bg-for-all" onclick="enableeditpasswords();">
+                <i class="fa fa-edit"></i>&nbsp;Edit
+              </button>
+              <h4 class="card-title" style="color: black">Password details</h4>
+            </header>
+
+            <div class="card-content">
+              <form>
+                <div class="form-group">
+                  <label>Old password</label>
+                  <input type="password" id="password1" name="old_password" class="form-control" disabled required>
+                </div>
+
+                <div class="form-group">
+                  <label>New password</label>
+                  <input type="password" id="password2" name="new_password" class="form-control" disabled required minlength="6" pattern="(?=.*[a-z])(?=.*\d).{6,}" title="Include 1 lowercase and 1 digit">
+                </div>
+
+                <div class="form-group">
+                  <label>Confirm password</label>
+                  <input type="password" id="password3" class="form-control" oninput="checkpassword();" disabled required>
+                </div>
+
+                <div class="form-group">
+                  <span id="password-validation-msg"></span>
+                </div>
+
+                <div class="form-group">
+                  <button type="submitPwd" id="update-password" class="btn btn-block blue buttons" disabled>Update</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- Tab Contents End -->
+
+
+<!-- 📬 Footer -->
+<footer class="footer_style">
+  <div class="container d-flex justify-content-between align-items-center flex-wrap">
+
+      <!-- Footer Info -->
+      <div class="footer-left">
+          <p>&copy; 2025. ReVibe Inc. All rights reserved.</p>
+          <p class="footer-description">
+              We are a nonprofit organization dedicated to making a difference in the world through donations and charitable actions.
+          </p>
+      </div>
+
+      <!-- Footer Links -->
+      <div class="footer-links">
+          <h5>Quick Links</h5>
+          <a href="{% url 'about-us' %}">About Us</a> |
+          <a href="mailto:support@Revibee.org">Contact Us</a> |
+          <a href="#terms">Terms & Conditions</a> |
+          <a href="#privacy">Privacy Policy</a>
+      </div>
+
+      <!-- Social Media Links -->
+      <div class="footer-social">
+          <h5>Follow Us</h5>
+          <a href="https://facebook.com/RevibeInc" target="_blank" class="social-icon facebook">Facebook</a> |
+          <a href="https://twitter.com/ReVibeInc" target="_blank" class="social-icon twitter">Twitter</a> |
+          <a href="https://linkedin.com/company/ReVibeInc" target="_blank" class="social-icon linkedin">LinkedIn</a> |
+          <a href="https://instagram.com/ReVibeInc" target="_blank" class="social-icon instagram">Instagram</a>
+      </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/progressbar.js"></script>
+<script src="{% static 'js/hospital_script.js' %}"></script>
+<script>
+  // ========== APPOINTMENTS ========== //
+  
+  // Global variable for selected appointment
+  let selectedAppointmentId = null;
+  
+  // Fetch and display appointments
+  async function fetchAppointments() {
+    try {
+      const response = await fetch('/api/pending-appointments/');
+      if (!response.ok) throw new Error('Network response was not ok');
+      
+      const data = await response.json();
+      const tbody = document.getElementById("appointmentsTableBody");
+      tbody.innerHTML = "";
+  
+      // Check if data is an array
+      if (!Array.isArray(data)) {
+        throw new Error('Invalid data format from server');
+      }
+  
+      data.forEach((item) => {
+        const row = document.createElement("tr");
+        row.dataset.id = item.appointment_id;
+  
+        row.innerHTML = `
+          <td><input type="checkbox" class="appointmentCheckbox"></td>
+          <td>${item.appointment_id}</td>
+          <td>${item.donor_name}</td>
+          <td>${item.organ}</td>
+          <td>${item.appointment_date}</td>
+          <td>${item.appointment_time}</td>
+        `;
+        
+        // Add click handler to each row
+        row.addEventListener('click', () => selectAppointment(row));
+        tbody.appendChild(row);
+      });
+    } catch (error) {
+      console.error("Error loading appointments:", error);
+      alert("Failed to load appointments. Please try again.");
+    }
+  }
+  
+  // Handle row selection
+  function selectAppointment(row) {
+    // Clear previous selection
+    document.querySelectorAll('#appointmentTable tr').forEach(r => {
+      r.classList.remove('selected');
+      const checkbox = r.querySelector('.appointmentCheckbox');
+      if (checkbox) checkbox.checked = false;
+    });
+  
+    // Set new selection
+    row.classList.add('selected');
+    const checkbox = row.querySelector('.appointmentCheckbox');
+    if (checkbox) checkbox.checked = true;
+    selectedAppointmentId = row.dataset.id;
+  }
+  
+  // Handle appointment actions
+  async function handleAppointmentAction(action) {
+    if (!selectedAppointmentId) {
+      alert("Please select an appointment first.");
+      return;
+    }
+  
+    try {
+      const response = await fetch(`/api/appointments/${selectedAppointmentId}/${action}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken')
+        }
+      });
+  
+      if (!response.ok) throw new Error('Action failed');
+      
+      alert(`Appointment ${action}d successfully!`);
+      fetchAppointments(); // Refresh the list
+      selectedAppointmentId = null; // Reset selection
+    } catch (error) {
+      console.error(`Error ${action}ing appointment:`, error);
+      alert(`Failed to ${action} appointment. Please try again.`);
+    }
+  }
+  
+  // ========== DONATIONS ========== //
+  
+  // Global variable for selected donation
+  let selectedDonationId = null;
+  
+  // Fetch and display donations
+  async function fetchDonations() {
+    try {
+      const response = await fetch('/hospitals/fetch-donations/');
+      if (!response.ok) throw new Error('Network response was not ok');
+      
+      const data = await response.json();
+      const tbody = document.getElementById("donationTableBody");
+      tbody.innerHTML = "";
+  
+      // Check if data is an array (adjust based on your API response)
+      const donations = Array.isArray(data) ? data : (data.data || []);
+      
+      donations.forEach((donation) => {
+        const row = document.createElement("tr");
+        row.dataset.id = donation.donation_id;
+  
+        row.innerHTML = `
+          <td><input type="checkbox" class="donationCheckbox"></td>
+          <td>${donation.donation_id}</td>
+          <td>${donation.donor_name || (donation.first_name + ' ' + donation.last_name)}</td>
+          <td>${donation.organ}</td>
+          <td>${donation.blood_group}</td>
+        `;
+        
+        // Add click handler to each row
+        row.addEventListener('click', () => selectDonation(row));
+        tbody.appendChild(row);
+      });
+    } catch (error) {
+      console.error("Error loading donations:", error);
+      alert("Failed to load donations. Please try again.");
+    }
+  }
+  
+  // Handle row selection
+  function selectDonation(row) {
+    // Clear previous selection
+    document.querySelectorAll('#donationTable tr').forEach(r => {
+      r.classList.remove('selected');
+      const checkbox = r.querySelector('.donationCheckbox');
+      if (checkbox) checkbox.checked = false;
+    });
+  
+    // Set new selection
+    row.classList.add('selected');
+    const checkbox = row.querySelector('.donationCheckbox');
+    if (checkbox) checkbox.checked = true;
+    selectedDonationId = row.dataset.id;
+  }
+  
+  // Handle donation actions
+  async function handleDonationAction(action) {
+    if (!selectedDonationId) {
+      alert("Please select a donation first.");
+      return;
+    }
+  
+    try {
+      const response = await fetch(`/hospitals/api/donations/${selectedDonationId}/${action}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken')
+        }
+      });
+  
+      if (!response.ok) throw new Error('Action failed');
+      
+      alert(`Donation ${action}d successfully!`);
+      fetchDonations(); // Refresh the list
+      selectedDonationId = null; // Reset selection
+    } catch (error) {
+      console.error(`Error ${action}ing donation:`, error);
+      alert(`Failed to ${action} donation. Please try again.`);
+    }
+  }
+  
+  // ========== COMMON FUNCTIONS ========== //
+  
+  // CSRF token helper
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+  
+  // Initialize when page loads
+  document.addEventListener("DOMContentLoaded", () => {
+    // Set up appointment tab
+    const appointmentTab = document.querySelector('a[href="#appointment_approvals"]');
+    if (appointmentTab) {
+      appointmentTab.addEventListener("click", fetchAppointments);
+    }
+  
+    // Set up donation tab
+    const donationTab = document.querySelector('a[href="#donation_approvals"]');
+    if (donationTab) {
+      donationTab.addEventListener("click", fetchDonations);
+    }
+  
+    // Appointment buttons
+    document.getElementById('appointmentDtls')?.addEventListener('click', () => {
+      if (selectedAppointmentId) {
+        console.log("Viewing details for:", selectedAppointmentId);
+        alert(`Showing details for appointment ${selectedAppointmentId}`);
+      } else {
+        alert("Please select an appointment first.");
+      }
+    });
+  
+    document.getElementById('appointmentApprv')?.addEventListener('click', () => {
+      handleAppointmentAction('approve');
+    });
+  
+    document.getElementById('appointmentDeny')?.addEventListener('click', () => {
+      handleAppointmentAction('deny');
+    });
+  
+    // Donation buttons
+    document.getElementById('donationDtls')?.addEventListener('click', () => {
+      if (selectedDonationId) {
+        console.log("Viewing details for donation:", selectedDonationId);
+        alert(`Showing details for donation ${selectedDonationId}`);
+      } else {
+        alert("Please select a donation first.");
+      }
+    });
+  
+    document.getElementById('donationApprv')?.addEventListener('click', () => {
+      handleDonationAction('approve');
+    });
+  
+    document.getElementById('donationDeny')?.addEventListener('click', () => {
+      handleDonationAction('deny');
+    });
+  });
+  </script>  
+<!-- <script src="{% static 'js/appointments.js' %}"></script> -->
+
+</body>
+</html>

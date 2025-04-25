@@ -1,0 +1,161 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Donor | Home</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpg" href="{% static 'images/logo2.jpg' %}" sizes="100x100">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+    <!-- Font Awesome & Google Fonts -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/donor_landing.css' %}?v={% now "U" %}">
+</head>
+
+<body>
+
+<!-- 🔷 Navigation Header -->
+<header class="zone">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="{% url 'donor-landing-page' %}">
+            <img src="{% static 'images/logo.png' %}" width="100" height="100" alt="Logo">
+        </a>
+
+        <!-- Mobile Nav Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop" aria-controls="navbarTop" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarTop">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'donor-landing-page' %}">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'donor-home' %}">DONATION HISTORY</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'book-appointment' %}">BOOK APPOINTMENT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'new-donation-request' %}">NEW DONATION REQUEST</a>
+                </li>
+
+                <!-- Dropdown for Settings -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        SETTINGS
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="settingsDropdown">
+                        <a class="dropdown-item" href="{% url 'donor-profile-update' %}">User Profile</a>
+                        <a class="dropdown-item" href="{% url 'donor-profile-update' %}">Change Password</a>
+                        <a class="dropdown-item" href="{% url 'donor-logout' %}">Log Out</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<!-- 📄 Main Content -->
+<div class="donation-section container">
+    <div class="description text-center">
+        <h1>Your Donation Matters</h1>
+        <p class="lead">
+            Over <strong>113,000 people</strong> are currently on the national transplant waiting list.
+            Every day, <strong>20 people die</strong> waiting. And every <strong>10 minutes</strong>, another name is added.
+        </p>
+        <p>Be the difference. Book an appointment at your nearest hospital and begin your donation journey.</p>
+    </div>
+
+    <!-- 🖼️ Carousel Section -->
+    <div id="donationCarousel" class="carousel slide mt-5" data-bs-ride="carousel">
+        <!-- Indicators -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#donationCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#donationCarousel" data-bs-slide-to="1"></button>
+        </div>
+
+        <!-- Slides -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'images/facts.jpg' %}" class="d-block w-100 carousel-img" alt="Donation Facts">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'images/organs.png' %}" class="d-block w-100 carousel-img" alt="Organs You Can Donate">
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#donationCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#donationCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- CTA Button -->
+    <div class="text-center mt-5">
+        <a href="{% url 'new-donation-request' %}" class="btn btn-donate">Make a Donation</a>
+    </div>
+</div>
+
+<!-- 📬 Footer -->
+<footer class="footer_style">
+    <div class="container d-flex justify-content-between align-items-center flex-wrap">
+
+        <!-- Footer Info -->
+        <div class="footer-left">
+            <p>&copy; 2025. ReVibe Inc. All rights reserved.</p>
+            <p class="footer-description">
+                We are a nonprofit organization dedicated to making a difference in the world through donations and charitable actions.
+            </p>
+        </div>
+
+        <!-- Footer Links -->
+        <div class="footer-links">
+            <h5>Quick Links</h5>
+            <a href="{% url 'about-us' %}">About Us</a> |
+            <a href="mailto:support@Revibee.org">Contact Us</a> |
+            <a href="#terms">Terms & Conditions</a> |
+            <a href="#privacy">Privacy Policy</a>
+        </div>
+
+        <!-- Social Media Links -->
+        <div class="footer-social">
+            <h5>Follow Us</h5>
+            <a href="https://facebook.com/RevibeInc" target="_blank" class="social-icon facebook">Facebook</a> |
+            <a href="https://twitter.com/ReVibeInc" target="_blank" class="social-icon twitter">Twitter</a> |
+            <a href="https://linkedin.com/company/ReVibeInc" target="_blank" class="social-icon linkedin">LinkedIn</a> |
+            <a href="https://instagram.com/ReVibeInc" target="_blank" class="social-icon instagram">Instagram</a>
+        </div>
+    </div>
+</footer>
+
+<!-- 🔌 Scripts -->
+<!-- 🔌 Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+<!-- Custom JavaScript -->
+<script src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>

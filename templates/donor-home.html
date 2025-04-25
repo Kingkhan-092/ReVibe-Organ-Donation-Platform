@@ -1,0 +1,117 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Donor | Donation History</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpg" href="{% static 'images/logo2.jpg' %}" sizes="100x100">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/donor-home.css' %}?v={% now "U" %}">
+</head>
+
+<body>
+    <!-- 🔷 Main Wrapper for Sticky Footer -->
+    <div class="main-wrapper">
+        <!-- 🔷 Navigation Header -->
+        <header class="zone">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="{% url 'donor-landing-page' %}">
+                    <img src="{% static 'images/logo.png' %}" width="100" height="100" alt="Logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop"
+                    aria-controls="navbarTop" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarTop">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'donor-landing-page' %}">HOME</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'donor-home' %}">DONATION HISTORY</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'book-appointment' %}">BOOK APPOINTMENT</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'new-donation-request' %}">NEW DONATION REQUEST</a></li>
+
+                        <!-- Settings Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SETTINGS</a>
+                            <div class="dropdown-menu" aria-labelledby="settingsDropdown">
+                                <a class="dropdown-item" href="{% url 'donor-profile-update' %}">User Profile</a>
+                                <a class="dropdown-item" href="{% url 'donor-profile-update' %}">Change Password</a>
+                                <a class="dropdown-item" href="{% url 'donor-logout' %}">Log Out</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <!-- 📋 Donation History Table -->
+        <div class="container">
+            <h3>Donation History</h3>
+            <table class="table table-bordered top" id="searchHistoryTable">
+                <thead>
+                    <tr class="table-light">
+                        <th scope="col">Donation ID</th>
+                        <th scope="col">Organ</th>
+                        <th scope="col">Blood group</th>
+                        <th scope="col">Donation Status</th>
+                        <th scope="col">Appointment Status</th>
+                        <th scope="col">Request Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dreq in donationrequests %}
+                    <tr>
+                        <td>{{ dreq.id }}</td>
+                        <td>{{ dreq.organ_type }}</td>
+                        <td>{{ dreq.blood_type }}</td>
+                        <td>{{ dreq.donation_status }}</td>
+                        <td>{{ dreq.appointment_status }}</td>
+                        <td>{{ dreq.datetime }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="centerText top">
+                <a href="{% url 'new-donation-request' %}">
+                    <button class="btn btn-info custom-donation-btn">New Donation</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📬 Footer -->
+    <footer class="footer_style">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap">
+            <div class="footer-left">
+                <p>&copy; 2025. ReVibe Inc. All rights reserved.</p>
+                <p class="footer-description">
+                    We are a nonprofit organization dedicated to making a difference in the world through donations and charitable actions.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 🔌 Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
