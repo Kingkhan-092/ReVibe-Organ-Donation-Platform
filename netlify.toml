@@ -1,9 +1,6 @@
 [build]
-  # Custom build command to install dependencies and run Django migrations
-  command = "pip install --upgrade pip setuptools && pip install -r requirements.txt && python manage.py migrate"
-
-  # Specify the directory where the build output will be located
-  publish = "build"
+  command = "pip install --upgrade pip setuptools && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput"
+  publish = "static"  # Or the appropriate directory where your static files are generated
 
 [build.environment]
   # Specify the Python version to use
