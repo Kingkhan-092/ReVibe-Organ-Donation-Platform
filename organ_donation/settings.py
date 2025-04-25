@@ -63,6 +63,9 @@ MIDDLEWARE = [
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+CORS_ALLOWED_ORIGINS = [
+    "https://revibe-organ.netlify.app",  # Replace with your actual Netlify URL
+]
 
 
 ROOT_URLCONF = 'organ_donation.urls'
