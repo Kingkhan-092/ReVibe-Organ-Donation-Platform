@@ -1,11 +1,11 @@
 [build]
   command = "pip install --upgrade pip setuptools && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput"
-  publish = "staticfiles"  # This should be the directory where static files are collected after running collectstatic
+  publish = "build"  # This should be the directory where your static files are collected and HTML files are built from Django templates.
 
 [build.environment]
   # Specify the Python version to use
   PYTHON_VERSION = "3.8.10"
-
+  
 [[redirects]]
   from = "/*"
   to = "/index.html"
