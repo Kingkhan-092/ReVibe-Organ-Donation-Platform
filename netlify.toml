@@ -1,4 +1,10 @@
 [build]
-  # Custom build command
+  # Custom build command to install dependencies and run Django migrations
   command = "pip install --upgrade pip setuptools && pip install -r requirements.txt && python manage.py migrate"
+
+  # Specify the directory where the build output will be located
   publish = "build"
+
+[build.environment]
+  # Specify the Python version to use
+  PYTHON_VERSION = "3.8.10"
