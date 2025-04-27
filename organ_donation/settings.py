@@ -25,7 +25,7 @@ SECRET_KEY = '2l*2=tgo4jwc=o+oivtm#wsrr(py^&fvzyn)k+x4j5r_q@3&0d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://revibe-organ.netlify.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 WKHTMLTOPDF = os.path.join(BASE_DIR, "wkhtmltopdf", "wkhtmltopdf.exe")
@@ -64,7 +64,7 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
-    "https://revibe-organ.netlify.app",  # Replace with your actual Netlify URL
+    "https://revibe-organ.netlify.app", 
 ]
 
 
